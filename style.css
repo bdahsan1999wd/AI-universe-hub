@@ -1,3 +1,6 @@
-*{
-    font-family: 'Poppins', sans-serif;
-  }
+* {
+  font-family: 'Poppins', sans-serif;
+}
+#modal-body-card-left {
+  background-color: #fef6f6;
+}
