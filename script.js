@@ -1,14 +1,9 @@
-const loadData = async (dataLimit) => {
+const loadData = async dataLimit => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
-
     spinnerToggle(true);
-
     const res = await fetch(url);
-
     const data = await res.json();
-
     displayData(data.data.tools, dataLimit);
-
     spinnerToggle(false);
 };
 
@@ -21,11 +16,10 @@ const displayData = (cards, dataLimit) => {
         cards = cards.slice(0, 6);
         seeMore.classList.remove('d-none');
     } else {
- 
         seeMore.classList.add('d-none');
     }
 
-    cards.forEach((card) => {
+    cards.forEach(card => {
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('col');
         cardDiv.innerHTML = `
@@ -56,17 +50,27 @@ const displayData = (cards, dataLimit) => {
 };
 
 const fetchCardDetails = id => {
-    let url = `https://openapi.programming-hero.com/api/ai/tool/${id}`
+    let url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
     fetch(url)
         .then(res => res.json())
         .then(data => showCardDetails(data.data))
         .catch(error => console.log(error));
 };
 
+const showCardDetails = cardDetails => {
+    console.log(cardDetails);
+    const cardDetail = document.getElementById('modal-body-card-right');
+    cardDetail.innerHTML = `
+    <img src="${cardDetails.image_link[0]}" class="card-img-top p-4" alt="card-image">
+    <div class="text-center mt-3">
+    <h4 class="fw-bold">${cardDetails.input_output_examples[0].input}</h4>
+    <p class="p-3">${cardDetails.input_output_examples[0].output}</p>
+    </div>
+    
+    `;
+};
 
-
-
-const spinnerToggle = (isLoading) => {
+const spinnerToggle = isLoading => {
     const loadingSpinner = document.getElementById('spinner');
     if (isLoading) {
         loadingSpinner.classList.remove('d-none');
@@ -76,7 +80,6 @@ const spinnerToggle = (isLoading) => {
 };
 
 document.getElementById('btn-see-more').addEventListener('click', function () {
-
     loadData();
 });
 
