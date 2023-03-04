@@ -1,9 +1,14 @@
-const loadData = async dataLimit => {
+const loadData = async (dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
+
     spinnerToggle(true);
+
     const res = await fetch(url);
+
     const data = await res.json();
+
     displayData(data.data.tools, dataLimit);
+
     spinnerToggle(false);
 };
 
@@ -16,10 +21,11 @@ const displayData = (cards, dataLimit) => {
         cards = cards.slice(0, 6);
         seeMore.classList.remove('d-none');
     } else {
+ 
         seeMore.classList.add('d-none');
     }
 
-    cards.forEach(card => {
+    cards.forEach((card) => {
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('col');
         cardDiv.innerHTML = `
@@ -50,5 +56,19 @@ const displayData = (cards, dataLimit) => {
 };
 
 
+
+const spinnerToggle = (isLoading) => {
+    const loadingSpinner = document.getElementById('spinner');
+    if (isLoading) {
+        loadingSpinner.classList.remove('d-none');
+    } else {
+        loadingSpinner.classList.add('d-none');
+    }
+};
+
+document.getElementById('btn-see-more').addEventListener('click', function () {
+
+    loadData();
+});
 
 loadData(6);
